@@ -18,6 +18,7 @@ host = "10.0.0.0"
 user = "user"
 pw = "pw"
 topic = "topic"
+upsname = "upsname"
 
 res = subprocess.check_output("/sbin/apcaccess")
 
@@ -41,7 +42,7 @@ def on_publish(client, userdata, mid):
         print("Published")
 
 def on_subscribe(mid, granted_qos):
-        print "Subscribed:",mid,granted_qos
+        print ("Subscribed:",mid,granted_qos)
 
 mqttc = mqtt.Client()
 mqttc.on_message = on_message
@@ -52,4 +53,4 @@ mqttc.username_pw_set(user, pw)
 mqttc.connect(host, 1883, 60)
 
 for thing in interesting:
-    mqttc.publish(topic+"/%s/%s" % (apc_status["upsname"],thing), apc_status[thing])
+    mqttc.publish(topic+"/%s/%s" % (apc_status[upsname],thing), apc_status[thing])
